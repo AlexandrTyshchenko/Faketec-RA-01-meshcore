@@ -4,7 +4,12 @@
 
 PromicroBoard board;
 
-RADIO_CLASS radio = new Module(P_LORA_NSS, P_LORA_DIO_1, P_LORA_RESET, P_LORA_BUSY, SPI);
+#if defined(USE_SX1276)
+  // SX127x (e.g. Ra-01): DIO0 (Rx/Tx done) wired to the BUSY pad, DIO1 on the DIO1/IRQ pad
+  RADIO_CLASS radio = new Module(P_LORA_NSS, P_LORA_BUSY, P_LORA_RESET, P_LORA_DIO_1, SPI);
+#else
+  RADIO_CLASS radio = new Module(P_LORA_NSS, P_LORA_DIO_1, P_LORA_RESET, P_LORA_BUSY, SPI);
+#endif
 
 WRAPPER_CLASS radio_driver(radio, board);
 

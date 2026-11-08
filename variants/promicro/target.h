@@ -4,7 +4,9 @@
 #include <RadioLib.h>
 #include <helpers/radiolib/RadioLibWrappers.h>
 #include <PromicroBoard.h>
-#ifdef USE_SX1268
+#if defined(USE_SX1276)
+  #include <helpers/radiolib/CustomSX1276Wrapper.h>
+#elif defined(USE_SX1268)
   #include <helpers/radiolib/CustomSX1268Wrapper.h>
 #else
   #include <helpers/radiolib/CustomSX1262Wrapper.h>
