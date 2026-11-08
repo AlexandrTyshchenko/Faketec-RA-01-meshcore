@@ -57,6 +57,12 @@ void RadioLibWrapper::setTxPower(int8_t dbm) {
 #ifdef LORA_TX_POWER_MAX
   if (dbm > LORA_TX_POWER_MAX) dbm = LORA_TX_POWER_MAX;  // protect an external PA from overdrive
 #endif
+#if defined(USE_SX1276)
+  // SX127x PA_BOOST (e.g. Ra-01) only takes 2..17 or 20 dBm; RadioLib rejects anything else
+  if (dbm < 2) dbm = 2;
+  else if (dbm > 17 && dbm < 20) dbm = 17;
+  else if (dbm > 20) dbm = 20;
+#endif
 #if defined(USE_LR2021)
   idle();
 #endif
